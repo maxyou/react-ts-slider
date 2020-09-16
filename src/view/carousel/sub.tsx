@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 
-const StyledDivSub = styled.div`
+const StyledDivSub = styled.div<{c3olor:string}>`
     width: 100%;
     height: 100%;
-    background-color: ${props=>props.color};
+    background-color: ${(props)=>props.c3olor};
     flex: 0 0 auto;
 `
 
 export default function SubPage() {
 
-  return <StyledDivSub>0000000000000</StyledDivSub>
+  return <StyledDivSub c3olor='red'>0000000000000</StyledDivSub>
 
   // const [count, setCount] = useState(0);
 
