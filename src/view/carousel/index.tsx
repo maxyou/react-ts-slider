@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import Sub from './sub'
 
+
 const StyledDivCarousel = styled.div`
     width: 100%;
     height: 100%;
@@ -18,30 +19,30 @@ const StyledDivWin = styled.div`
     justify-content: center;    
     align-items: stretch;
 `
-
-export default function Carousel() {
+const StyledDivSub = styled.div`
+    width: 100%;
+    height: 100%;
+    background-color: ${props=>props.color};
+    flex: 0 0 auto;
+`
+function Carousel() {
 
   return <StyledDivCarousel>
       <StyledDivWin>
-        <Sub></Sub>
+        <Sub color='red'></Sub>
+        <Sub color='yellow'></Sub>
+        <Sub color='blue'></Sub>
       </StyledDivWin>
     </StyledDivCarousel>
-
-  // const [count, setCount] = useState(0);
-
-  // // Similar to componentDidMount and componentDidUpdate:
-  // useEffect(() => {
-  //   // Update the document title using the browser API
-  //   document.title = `You clicked ${count} times`;
-  // });
-
-  // return (
-  //   <div>
-  //     <p>You clicked {count} times</p>
-  //     <button onClick={() => setCount(count + 1)}>
-  //       Click me in Carousel
-  //     </button>
-  //   </div>
-  // );
+        
+        {/* <StyledDivCarousel>
+          <StyledDivWin>
+              <StyledDivSub color='red'></StyledDivSub>
+              <StyledDivSub color='brown'></StyledDivSub>
+              <StyledDivSub color='green'></StyledDivSub>
+          </StyledDivWin>
+        </StyledDivCarousel> */}
 }
+
+export default Carousel
 
