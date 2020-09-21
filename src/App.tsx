@@ -20,7 +20,7 @@ const StyledDivByUser = styled.div`
     width: 30%;
     height: 30%;
     margin-top: 15%;
-    background-color: ${props=>props.color};
+    background-color: ${props => props.color};
 `
 
 const StyledDivCarousel = styled.div`
@@ -42,7 +42,7 @@ const StyledDivWin = styled.div`
 const StyledDivSub = styled.div`
     width: 100%;
     height: 100%;
-    background-color: ${props=>props.color};
+    background-color: ${props => props.color};
     flex: 0 0 auto;
 `
 
@@ -50,18 +50,15 @@ function App() {
   return (
     <StyledDivApp>
       <StyledDivByUser color='yellow'>
-        
-        <Carousel></Carousel>
 
-        {/* <StyledDivCarousel>
-          <StyledDivWin>
-              <StyledDivSub color='red'></StyledDivSub>
-              <StyledDivSub color='brown'></StyledDivSub>
-              <StyledDivSub color='green'></StyledDivSub>
-          </StyledDivWin>
-        </StyledDivCarousel> */}
+        <Carousel option={{ startAt: 1, autoPlay: false }}>
+          <div>1111</div>
+          <div>22222</div>
+          <div>333333</div>
+        </Carousel>
+
       </StyledDivByUser>
-      
+
     </StyledDivApp>
   );
 }

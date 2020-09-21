@@ -1,35 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 
-interface ISub{
-  c3olor:string
+interface ISub {
+  c3olor: string
 }
 const StyledDivSub = styled.div<ISub>`
     width: 100%;
     height: 100%;
-    background-color: ${(props)=>props.c3olor};
+    background-color: ${(props) => props.c3olor};
     flex: 0 0 auto;
 `
 
-export default function SubPage(props:any) {
+export default function SubPage(props: any) {
 
-  return <StyledDivSub c3olor={props.color}>sub</StyledDivSub>
 
-  // const [count, setCount] = useState(0);
 
-  // // Similar to componentDidMount and componentDidUpdate:
-  // useEffect(() => {
-  //   // Update the document title using the browser API
-  //   document.title = `You clicked ${count} times`;
-  // });
+  return <StyledDivSub c3olor={props.color}>
+    <div>
+      {props.children}
+    </div>
+    <div>
+      <progress value={props.process} max="100"></progress>
+    </div>
+  </StyledDivSub>
 
-  // return (
-  //   <div>
-  //     <p>You clicked {count} times</p>
-  //     <button onClick={() => setCount(count + 1)}>
-  //       Click me
-  //     </button>
-  //     <progress id="file" value="12" max="100"> 82% </progress>
-  //   </div>
-  // );
+
 }
