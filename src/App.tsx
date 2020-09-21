@@ -11,7 +11,7 @@ const StyledDivApp = styled.div`
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;    
-    align-items: stretch;
+    align-items: center;
     background-color: gray;
 `
 
@@ -19,31 +19,9 @@ const StyledDivByUser = styled.div`
     flex: 0 0 auto;
     width: 30%;
     height: 30%;
-    margin-top: 15%;
+    margin: 25%;
+    padding: 10px;
     background-color: ${props => props.color};
-`
-
-const StyledDivCarousel = styled.div`
-    width: 100%;
-    height: 100%;
-    padding: 2%;
-    background-color: #123456;
-    //overflow: hidden;
-`
-const StyledDivWin = styled.div`
-    width: 100%;
-    height: 100%;
-    background-color: blue;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;    
-    align-items: stretch;
-`
-const StyledDivSub = styled.div`
-    width: 100%;
-    height: 100%;
-    background-color: ${props => props.color};
-    flex: 0 0 auto;
 `
 
 function App() {
@@ -52,8 +30,8 @@ function App() {
       <StyledDivByUser color='yellow'>
 
         <Carousel option={{ startAt: 1, autoPlay: false }}>
-          <div>1111</div>
-          <div>22222</div>
+          {/* <div>1111</div>
+          <div>22222</div> */}
           <div>333333</div>
         </Carousel>
 

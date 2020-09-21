@@ -1,32 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
+import { getDefaultCompilerOptions } from 'typescript';
 import Sub from './sub'
 
 
 const StyledDivCarousel = styled.div`
     width: 100%;
     height: 100%;
-    padding: 2%;
-    background-color: #123456;
+    background-color: #c23456;
     position: relative;
     //overflow: hidden;
 `
 const StyledDivWin = styled.div`
-    width: 90%;
-    height: 90%;    
-    position:absolute;
-    left:100px;    
+    width: 100%;
+    height: 100%;
     background-color: blue;
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;    
     align-items: stretch;
-`
-const StyledDivSub = styled.div`
-    width: 100%;
-    height: 100%;
-    background-color: ${props => props.color};
-    flex: 0 0 auto;
 `
 
 interface CarouselOption {
@@ -40,22 +32,8 @@ interface IProps {
 
 function Carousel(props: IProps) {
 
-  // function childrenAddKey(arr: []) {
-  //   if (arr.length >= 0) {
-  //     return arr.map((v: any, index) => {
-  //       console.log('index:')
-  //       console.log(index)
-  //       return { ...v, key: index }
-  //     })
-  //   } else {
-  //     return []
-  //   }
-  // }
-  // const children = childrenAddKey(props.children)
-
   const [counts, setCounts] = useState<number[]>()
-  // const countss = new Array(props.children.length).fill(0)
-  // console.log(countss)
+
   useEffect(
     () => {
       console.log('run setCounts()')
@@ -68,16 +46,35 @@ function Carousel(props: IProps) {
   return <StyledDivCarousel>
     <StyledDivWin>
       {
+        React.Children.map(props.children,(v: any, index: number) => {
+          console.log('========v.key:')
+          console.log(v.key)
+          return <Sub key={index} color={getColor(index)} process={counts ? counts[index] : 0}>{v}</Sub>
+        })
+      }
+      {/* {
         props.children.map(
           (v: any, index: number) => {
             console.log('========v.key:')
             console.log(v.key)
-            return <Sub key={index} color='red' process={counts ? counts[index] : 0}>{v}</Sub>
+            return <Sub key={index} color={getColor(index)} process={counts ? counts[index] : 0}>{v}</Sub>
           }
         )
-      }
+      } */}
     </StyledDivWin>
   </StyledDivCarousel>
+}
+
+const subColor = [
+  '#234567',
+  '#c34567',
+  '#c3c567',
+  '#c345c7',
+  '#c3a5c7',
+]
+function getColor(n:number){
+  const mn = n % 5
+  return subColor[mn]
 }
 
 export default Carousel
