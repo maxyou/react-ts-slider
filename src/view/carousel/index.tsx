@@ -11,7 +11,12 @@ const StyledDivCarousel = styled.div`
     position: relative;
     //overflow: hidden;
 `
-const StyledDivWin = styled.div`
+interface ILeft {
+  left: number
+}
+const StyledDivWin = styled.div<ILeft>`
+    position:relative;
+    left:${(props)=>props.left}%;
     width: 100%;
     height: 100%;
     background-color: blue;
@@ -32,8 +37,18 @@ interface IProps {
 
 function Carousel(props: IProps) {
 
+  const [left, setLeft] = useState(0)
   const [counts, setCounts] = useState<number[]>()
 
+  useEffect(
+    () => {
+      console.log('run setCounts()')
+      setTimeout(() => {
+        setLeft(100)
+      }, 2000);
+      setCounts(new Array(props.children.length).fill(0))
+    }, []
+  )
   useEffect(
     () => {
       console.log('run setCounts()')
@@ -44,7 +59,7 @@ function Carousel(props: IProps) {
   console.log(counts)
 
   return <StyledDivCarousel>
-    <StyledDivWin>
+    <StyledDivWin left={left}>
       {
         React.Children.map(props.children,(v: any, index: number) => {
           console.log('========v.key:')
