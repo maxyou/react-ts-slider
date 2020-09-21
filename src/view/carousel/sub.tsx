@@ -11,30 +11,34 @@ const StyledDivSub = styled.div<ISub>`
     position:relative;
     background-color: ${(props) => props.color};    
 `
-const StyledDivProcess = styled.div`
-    width: 100%;
-    height: 100%;
-    position:absolute;
-    bottom:10px;
-    padding: 15px;
-    background-color: yellow;
-`
 const StyledDivChild = styled.div`
     width: 100%;
     height: 100%;
-    padding: 10px;
-    background-color: blue;
+`
+const StyledDivProcess = styled.div`
+    width: 70%;
+    height: 10%;
+    position:absolute;
+    bottom:5%;
+    left:15%;
+    display: flex;
+    justify-content: center;    
+    align-items: center;
+`
+const StyledProcess = styled.progress`
+  width: 50%;
+  flex: 0 0 auto;
 `
 export default function SubPage(props: any) {
 
 
   return <StyledDivSub color={props.color}>
-    {/* <StyledDivChild>
+    <StyledDivChild>
       {props.children}
     </StyledDivChild>
     <StyledDivProcess>
-      <progress value={props.process} max="100"></progress>
-    </StyledDivProcess> */}
+      <StyledProcess value={props.process} max="100"></StyledProcess>
+    </StyledDivProcess>
   </StyledDivSub>
 
 

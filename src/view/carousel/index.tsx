@@ -52,15 +52,6 @@ function Carousel(props: IProps) {
           return <Sub key={index} color={getColor(index)} process={counts ? counts[index] : 0}>{v}</Sub>
         })
       }
-      {/* {
-        props.children.map(
-          (v: any, index: number) => {
-            console.log('========v.key:')
-            console.log(v.key)
-            return <Sub key={index} color={getColor(index)} process={counts ? counts[index] : 0}>{v}</Sub>
-          }
-        )
-      } */}
     </StyledDivWin>
   </StyledDivCarousel>
 }
