@@ -29,10 +29,12 @@ function App() {
     <StyledDivApp>
       <StyledDivByUser color='yellow'>
 
-        <Carousel option={{ startAt: 1, autoPlay: false }}>
+        <Carousel option={{ slideTime: 1000, autoPlay: false }}>
           <div>1111</div>
-          {/* <div>22222</div> */}
-          {/* <div>333333</div> */}
+          <div>22222</div>
+          <div>333333</div>
+          <div>444</div>
+          <div>444</div>
         </Carousel>
 
       </StyledDivByUser>

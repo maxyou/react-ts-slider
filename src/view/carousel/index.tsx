@@ -28,7 +28,7 @@ const StyledDivWin = styled.div<ILeft>`
 //left:${(props)=>props.left}%;
 
 interface CarouselOption {
-  startAt: number,
+  slideTime: number,
   autoPlay: boolean
 }
 interface IProps {
@@ -38,22 +38,27 @@ interface IProps {
 
 function Carousel(props: IProps) {
 
-  console.log('props.children.length:')
-  console.log(props.children.length)
-  console.log('React.Children:')
-  console.log(React.Children.count(props.children))
+  const childrenNumber = React.Children.count(props.children)
+  const childrenLeft:number[] = []
 
-  const [left, setLeft] = useState(0)
+  for(let i = 0; i < childrenNumber; i++){
+      let leftOffset = ((childrenNumber - 1)*100)/2 - (100*i)
+      console.log(`i=${i}, a=${leftOffset}`)
+      childrenLeft.push(leftOffset)
+  }
+  console.log(childrenLeft)
+
+  const [left, setLeft] = useState(childrenLeft[0])
   const [counts, setCounts] = useState<number[]>()
 
-  // useEffect(
-  //   () => {
-  //     console.log('run setCounts()')
-  //     setTimeout(() => {
-  //       setLeft(100)
-  //     }, 2000);
-  //   }, []
-  // )
+  useEffect(
+    () => {
+      console.log('run setCounts()')
+      setTimeout(() => {
+        setLeft(childrenLeft[1])
+      }, 2000);
+    }, []
+  )
   useEffect(
     () => {
       console.log('run setCounts()')
@@ -67,8 +72,6 @@ function Carousel(props: IProps) {
     <StyledDivWin left={left}>
       {
         React.Children.map(props.children,(v: any, index: number) => {
-          console.log('========v.key:')
-          console.log(v.key)
           return <Sub key={index} color={getColor(index)} process={counts ? counts[index] : 0}>{v}</Sub>
         })
       }
