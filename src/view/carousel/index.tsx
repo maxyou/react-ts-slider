@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
-import { getDefaultCompilerOptions } from 'typescript';
+import { keyframes } from 'styled-components'
 import Sub from './sub'
-
 
 const StyledDivCarousel = styled.div`
     width: 100%;
@@ -15,8 +14,9 @@ interface ILeft {
   left: number
 }
 const StyledDivWin = styled.div<ILeft>`
-    position:relative;
+    transition:left 0.5s; 
     left:${(props)=>props.left}%;
+    position:relative;    
     width: 100%;
     height: 100%;
     background-color: blue;
@@ -25,6 +25,7 @@ const StyledDivWin = styled.div<ILeft>`
     justify-content: center;    
     align-items: stretch;
 `
+//left:${(props)=>props.left}%;
 
 interface CarouselOption {
   startAt: number,
