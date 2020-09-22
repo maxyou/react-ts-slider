@@ -31,8 +31,8 @@ function App() {
 
         <Carousel option={{ startAt: 1, autoPlay: false }}>
           <div>1111</div>
-          <div>22222</div>
-          <div>333333</div>
+          {/* <div>22222</div> */}
+          {/* <div>333333</div> */}
         </Carousel>
 
       </StyledDivByUser>

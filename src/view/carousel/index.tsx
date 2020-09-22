@@ -38,18 +38,22 @@ interface IProps {
 
 function Carousel(props: IProps) {
 
+  console.log('props.children.length:')
+  console.log(props.children.length)
+  console.log('React.Children:')
+  console.log(React.Children.count(props.children))
+
   const [left, setLeft] = useState(0)
   const [counts, setCounts] = useState<number[]>()
 
-  useEffect(
-    () => {
-      console.log('run setCounts()')
-      setTimeout(() => {
-        setLeft(100)
-      }, 2000);
-      setCounts(new Array(props.children.length).fill(0))
-    }, []
-  )
+  // useEffect(
+  //   () => {
+  //     console.log('run setCounts()')
+  //     setTimeout(() => {
+  //       setLeft(100)
+  //     }, 2000);
+  //   }, []
+  // )
   useEffect(
     () => {
       console.log('run setCounts()')
