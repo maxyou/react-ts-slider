@@ -30,11 +30,11 @@ function App() {
       <StyledDivByUser color='yellow'>
 
         <Carousel option={{ slideTime: 1000, autoPlay: false }}>
-          <div>1111</div>
-          <div>22222</div>
-          <div>333333</div>
-          <div>444</div>
-          <div>444</div>
+          <div><span>1. This is the first chapter in a step-by-step guide about main React concepts. You can find a list of all its chapters in the navigation sidebar. If you’re reading this from a mobile device, you can access the navigation by pressing the button in the bottom right corner of your screen.</span></div>
+          <div><span>2. This guide occasionally uses some of the newer JavaScript syntax in the examples. If you haven’t worked with JavaScript in the last few years, these three points should get you most of the way.</span></div>
+          <div><span>3. It is called JSX, and it is a syntax extension to JavaScript. We recommend using it with React to describe what the UI should look like. JSX may remind you of a template language, but it comes with the full power of JavaScript.</span></div>
+          <div><span>4. Instead of artificially separating technologies by putting markup and logic in separate files, React separates concerns with loosely coupled units called “components” that contain both. We will come back to components in a further section, but if you’re not yet comfortable putting markup in JS, this talk might convince you otherwise</span></div>
+          <div><span>5. By default, React DOM escapes any values embedded in JSX before rendering them. Thus it ensures that you can never inject anything that’s not explicitly written in your application. Everything is converted to a string before being rendered. This helps prevent XSS (cross-site-scripting) attacks.</span></div>
         </Carousel>
 
       </StyledDivByUser>
