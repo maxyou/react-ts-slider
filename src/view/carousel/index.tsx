@@ -85,7 +85,7 @@ interface IProps {
 
 function Carousel(props: IProps) {
 
-  const childrenSub = React.Children.toArray(props.children)
+  const childrenSub = React.Children.toArray(props.children).map((v, index)=><Sub key={index} subMsg='subMsg'>{v}</Sub>)
   
   const childrenNumber = childrenSub.length
   const childrenProgress:any[] = []
@@ -144,7 +144,7 @@ function Carousel(props: IProps) {
   return <StyledDivCarousel>
     <StyledDivWin left={left}>
       {
-        childrenSub.map((v, index)=><Sub key={index} subMsg='subMsg'>{v}</Sub>)
+        childrenSub //.map((v, index)=><Sub key={index} subMsg='subMsg'>{v}</Sub>)
       }
     </StyledDivWin>
     <StyledDivLeftArrow onClick={onArrowLeftClicked}  id='leftArrow'>{`<`}</StyledDivLeftArrow>
