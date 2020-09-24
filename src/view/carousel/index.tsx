@@ -10,10 +10,8 @@ const StyledDivCarousel = styled.div`
     position: relative;
     //overflow: hidden;
 `
-interface ILeft {
-  left: number
-}
-const StyledDivWin = styled.div<ILeft>`
+
+const StyledDivWin = styled.div<{left: number}>`
     transition:left 0.5s; 
     left:${(props)=>props.left}%;
     position:relative;    
@@ -66,13 +64,14 @@ const progress0to100 = keyframes`
     width: 100%;
   }
 `
-const StyledDivProgressValue = styled.div`
+
+const StyledDivProgressValue = styled.div<{run:string}>`
     width: 0%;
     height: 100%;
     background-color: green;
     animation: ${progress0to100} 2s 1;
     animation-fill-mode: forwards;
-    animation-play-state: running;
+    animation-play-state: ${props=>props.run};
 `
 
 interface CarouselOption {
@@ -91,6 +90,27 @@ function Carousel(props: IProps) {
   const childrenNumber = childrenSub.length
   const childrenProgress:any[] = []
   const childrenLeft:number[] = []  
+  // const [count, setCount] = useState(0)
+  const [runCtrl, setRunCtrl] = useState('paused')
+  const [currentSub, setCurrentSub] = useState(0) //1~n
+
+  for(let i = 0; i < childrenNumber; i++){    
+    let leftOffset = ((childrenNumber - 1)*100)/2 - (100*i)
+    // console.log(`i=${i}, a=${leftOffset}`)
+    
+    childrenLeft.push(leftOffset)
+    
+    childrenProgress.push(<StyledDivProgressMax key={i}>
+        <StyledDivProgressValue 
+          run={runCtrl}
+          onAnimationStart={onProgressAnimationStart} 
+          onAnimationEnd={onProgressAnimationEnd} 
+          id={`pv${i}`}>              
+        </StyledDivProgressValue>
+      </StyledDivProgressMax>)  
+  }
+
+  const [left, setLeft] = useState(childrenLeft[0])
 
 
   function onProgressAnimationStart(e:any){
@@ -104,23 +124,6 @@ function Carousel(props: IProps) {
     setLeft(childrenLeft[1])
   }
 
-  for(let i = 0; i < childrenNumber; i++){
-      let leftOffset = ((childrenNumber - 1)*100)/2 - (100*i)
-      console.log(`i=${i}, a=${leftOffset}`)
-      childrenLeft.push(leftOffset)
-      childrenProgress.push(<StyledDivProgressMax key={i}>
-          <StyledDivProgressValue 
-            onAnimationStart={onProgressAnimationStart} 
-            onAnimationEnd={onProgressAnimationEnd} 
-            id={`pv${i}`}>              
-          </StyledDivProgressValue>
-        </StyledDivProgressMax>)  
-  }
-  console.log(childrenLeft)
-
-  const [left, setLeft] = useState(childrenLeft[0])
-  const [count, setCount] = useState(0)
-  const [currentSub, setCurrentSub] = useState(0) //1~n
 
   useEffect(
     () => {
@@ -135,7 +138,7 @@ function Carousel(props: IProps) {
   function onArrowRightClicked(e:any){
     // alert('right')    
     console.log(e.target.id)
-    // React.Children.toArray(childrenProgress[0].children)[0].style.animationPlayState = "running";
+    setRunCtrl('running')
   }
 
   return <StyledDivCarousel>
