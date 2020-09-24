@@ -74,6 +74,7 @@ export default function Progress(props: IProgress) {
 
     console.log(`onProgressAnimationEnd: ${e.target.id}`)
     // setLeft(childrenLeft[1])
+    props.callback()
   }
 
   return <StyledDivProcess>
