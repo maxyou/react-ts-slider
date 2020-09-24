@@ -25,6 +25,22 @@ const StyledDivWin = styled.div<ILeft>`
     justify-content: center;    
     align-items: stretch;
 `
+const StyledDivLeftArrow = styled.div`
+    width: 5%;
+    height: 30%;
+    position:absolute;
+    top:30%;
+    left:0%;
+    background-color: blue;
+`
+const StyledDivRightArrow = styled.div`
+    width: 5%;
+    height: 30%;
+    position:absolute;
+    top:30%;
+    right:0%;
+    background-color: blue;
+`
 const StyledDivProcess = styled.div`
     width: 70%;
     height: 10%;
@@ -36,6 +52,12 @@ const StyledDivProcess = styled.div`
     justify-content: center;    
     align-items: stretch;
 `
+const StyledDivProgressMax = styled.div`
+    width: 0%;
+    flex: 1 1 auto;
+    background-color: yellow;
+    margin:3px;    
+`
 const progress0to100 = keyframes`
   from {
     width: 0%;
@@ -44,18 +66,13 @@ const progress0to100 = keyframes`
     width: 100%;
   }
 `
-const StyledDivProgressMax = styled.div`
-    width: 0%;
-    flex: 1 1 auto;
-    background-color: yellow;
-    margin:3px;    
-`
 const StyledDivProgressValue = styled.div`
     width: 0%;
     height: 100%;
     background-color: green;
     animation: ${progress0to100} 2s 1;
     animation-fill-mode: forwards;
+    animation-play-state: running;
 `
 
 interface CarouselOption {
@@ -72,14 +89,32 @@ function Carousel(props: IProps) {
   const childrenSub = React.Children.toArray(props.children)
   
   const childrenNumber = childrenSub.length
-  const childrenProgress = []
+  const childrenProgress:any[] = []
   const childrenLeft:number[] = []  
+
+
+  function onProgressAnimationStart(e:any){
+
+    console.log(`onProgressAnimationStart: ${e.target.id}`)
+
+  }
+  function onProgressAnimationEnd(e:any){
+
+    console.log(`onProgressAnimationEnd: ${e.target.id}`)
+    setLeft(childrenLeft[1])
+  }
 
   for(let i = 0; i < childrenNumber; i++){
       let leftOffset = ((childrenNumber - 1)*100)/2 - (100*i)
       console.log(`i=${i}, a=${leftOffset}`)
       childrenLeft.push(leftOffset)
-      childrenProgress.push(<StyledDivProgressMax key={i}><StyledDivProgressValue></StyledDivProgressValue></StyledDivProgressMax>)  
+      childrenProgress.push(<StyledDivProgressMax key={i}>
+          <StyledDivProgressValue 
+            onAnimationStart={onProgressAnimationStart} 
+            onAnimationEnd={onProgressAnimationEnd} 
+            id={`pv${i}`}>              
+          </StyledDivProgressValue>
+        </StyledDivProgressMax>)  
   }
   console.log(childrenLeft)
 
@@ -93,6 +128,15 @@ function Carousel(props: IProps) {
     }, []
   )
 
+  function onArrowLeftClicked(e:any){
+    // alert('left')
+    console.log(e.target.id)
+  }
+  function onArrowRightClicked(e:any){
+    // alert('right')    
+    console.log(e.target.id)
+    // React.Children.toArray(childrenProgress[0].children)[0].style.animationPlayState = "running";
+  }
 
   return <StyledDivCarousel>
     <StyledDivWin left={left}>
@@ -100,6 +144,8 @@ function Carousel(props: IProps) {
         childrenSub.map((v, index)=><Sub key={index} subMsg='subMsg'>{v}</Sub>)
       }
     </StyledDivWin>
+    <StyledDivLeftArrow onClick={onArrowLeftClicked}  id='leftArrow'>{`<`}</StyledDivLeftArrow>
+    <StyledDivRightArrow onClick={onArrowRightClicked} id='rightArrow'>{`>`}</StyledDivRightArrow>
     <StyledDivProcess>
       {
         childrenProgress
