@@ -1,59 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
-import { keyframes } from 'styled-components'
+import IconAutoPlay from './icon/play.svg'
+import IconStopPlay from './icon/suspended.svg'
+import IconArrowLeft from './icon/arrow-left-bold.svg'
+import IconArrowRight from './icon/arrow-right-bold.svg'
 import Sub from './sub'
 import Progress, {State as ProgressState, Ctrl as ProgressCtrl} from './progress'
 
 const StyledDivCarousel = styled.div`
     width: 100%;
     height: 100%;
-    background-color: #c27496;
     position: relative;
     overflow: hidden;
 `
-
 const StyledDivWin = styled.div<{left: number}>`
     transition:left 0.5s; 
     left:${(props)=>props.left}%;
     position:relative;    
     width: 100%;
     height: 100%;
-    //background-color: blue;
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;    
     align-items: stretch;
 `
-const StyledDivLeftArrow = styled.div`
-    width: 5%;
+const StyledImgLeftArrow = styled.img`
     height: 30%;
+    width: 5%;
     position:absolute;
     top:30%;
     left:0%;
-    background-color: blue;
+    background-color: gray;
+    opacity:0.5;
 `
-const StyledDivRightArrow = styled.div`
+const StyledImgRightArrow = styled.img`
     width: 5%;
     height: 30%;
     position:absolute;
     top:30%;
     right:0%;
-    background-color: blue;
+    background-color: gray;
+    opacity:0.5;
 `
 const StyledDivProgress = styled.div`
     width: 100%;
     height: 10%;
     position:absolute;
     bottom:5%;
-    background-color: gray;
     display: flex;
     justify-content: center;    
     align-items: stretch;
 `
-const StyledDivAutoPlay = styled.div`
-    width: 20%;
+const StyledImgAutoPlay = styled.img`
+    width: 10%;
     height: 100%;
-    background-color: brown;
     display: flex;
     justify-content: center;    
     align-items: stretch;
@@ -132,8 +132,9 @@ function Carousel(props: IProps) {
     <StyledDivWin left={left}>
       {childrenSub}
     </StyledDivWin>
-    <StyledDivLeftArrow onClick={onArrowLeftClicked}  id='leftArrow'>{`<`}</StyledDivLeftArrow>
-    <StyledDivRightArrow onClick={onArrowRightClicked} id='rightArrow'>{`>`}</StyledDivRightArrow>
+    {/* <StyledDivLeftArrow onClick={onArrowLeftClicked}  id='leftArrow'>{`<`}</StyledDivLeftArrow> */}
+    <StyledImgLeftArrow src={IconArrowLeft} onClick={onArrowLeftClicked}  id='leftArrow' />
+    <StyledImgRightArrow src={IconArrowRight} onClick={onArrowRightClicked} id='rightArrow' />
     <StyledDivProgress>
       <Progress 
         childrenNum={childrenNumber} 
@@ -143,7 +144,7 @@ function Carousel(props: IProps) {
         runNumber={runNumber}
         >
       </Progress>
-    <StyledDivAutoPlay onClick={enableAutoPlay}>{autoPlay?'dis auto':'en auto'}</StyledDivAutoPlay>
+    <StyledImgAutoPlay src={autoPlay?IconStopPlay:IconAutoPlay} onClick={enableAutoPlay} />
     </StyledDivProgress>
   </StyledDivCarousel>
 }

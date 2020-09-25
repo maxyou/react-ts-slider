@@ -17,17 +17,17 @@ const StyledDivApp = styled.div`
 
 const StyledDivByUser = styled.div`
     flex: 0 0 auto;
-    width: 30%;
-    height: 30%;
-    margin: 25%;
-    padding: 10px;
+    width: 50%;
+    height: 50%;
+    margin: 5%;
+    padding: 5px;
     background-color: ${props => props.color};
 `
 
 function App() {
   return (
     <StyledDivApp>
-      <StyledDivByUser color='yellow'>
+      <StyledDivByUser color='#d2c394'>
 
         <Carousel option={{ slideTime: 1000, autoPlay: false }}>
           <div><span>1. This is the first chapter in a step-by-step guide about main React concepts. You can find a list of all its chapters in the navigation sidebar. If you’re reading this from a mobile device, you can access the navigation by pressing the button in the bottom right corner of your screen.</span></div>

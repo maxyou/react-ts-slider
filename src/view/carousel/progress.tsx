@@ -5,7 +5,6 @@ import { keyframes } from 'styled-components'
 const StyledDivProcess = styled.div`
     width: 70%;
     height: 100%;
-    background-color: red;
     display: flex;
     justify-content: center;    
     align-items: stretch;
@@ -13,8 +12,8 @@ const StyledDivProcess = styled.div`
 const StyledDivProgressMax = styled.div`
     width: 0%;
     flex: 1 1 auto;
-    background-color: yellow;
-    margin:3px;    
+    margin:3px;
+    border: 1px solid black;
 `
 const progress0to100 = keyframes`
   from {
@@ -35,7 +34,7 @@ const progress0to100_2 = keyframes`
 const StyledDivProgressValue = styled.div<{ widthPreset:number, animName:any, animPlayState: string }>`
     width: ${props => props.widthPreset}%;
     height: 100%;
-    background-color: green;
+    background-color: white;
     animation-name: ${props => props.animName};
     animation-duration: 3s;
     animation-iteration-count: 1;
