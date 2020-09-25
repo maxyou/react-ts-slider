@@ -87,9 +87,11 @@ function Carousel(props: IProps) {
 
   function onProgressAnimState(progressState:ProgressState){
 
-    console.log('onProgressAnimEnd')
+    console.log(`onProgressAnimEnd: ${currentSub}`)
     if(currentSub<childrenNumber){
       setLeft(childrenLeft[currentSub])
+      setCurrentSub(currentSub+1)
+      setRunNumber(runNumber+1)
     }
   }
 

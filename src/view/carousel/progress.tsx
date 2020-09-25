@@ -29,7 +29,7 @@ const progress0to100 = keyframes`
 `
 const progress0to100_2 = keyframes`
   from {
-    width: 0%;
+    width: 1%;
   }
   to {
     width: 100%;
@@ -70,10 +70,11 @@ export default function Progress(props: IProgress) {
 
   // for (let i = 0; i < props.childrenNum; i++) {
   for (let i = 0; i < 1; i++) {
-    console.log(`in Progress(): childrenProgress.push(), props.runNumber:${props.runNumber}`)
+    // console.log(`in Progress(): childrenProgress.push(), props.runNumber:${props.runNumber}`)
     childrenProgress.push(<StyledDivProgressMax key={i}>
       <StyledDivProgressValue
-        animName={props.runNumber%2==0?progress0to100:null}
+        animName={props.runNumber%2==0?progress0to100:progress0to100_2}
+        // animName={props.runNumber%2==0?progress0to100:null}
         animPlayState={progressCtrl2AnimPlayState(props.progressCtrl)}
         onAnimationStart={onProgressAnimationStart}
         onAnimationEnd={onProgressAnimationEnd}
