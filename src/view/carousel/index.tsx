@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { keyframes } from 'styled-components'
 import Sub from './sub'
-import Progress, {State as ProgressState} from './progress'
+import Progress, {State as ProgressState, Ctrl as ProgressCtrl} from './progress'
 
 const StyledDivCarousel = styled.div`
     width: 100%;
@@ -52,12 +52,15 @@ interface IProps {
 
 function Carousel(props: IProps) {
 
+  console.log('in Carousel()')
+
   const childrenSub = React.Children.toArray(props.children).map((v, index)=><Sub key={index} subMsg='subMsg'>{v}</Sub>)
   
   const childrenNumber = childrenSub.length
 
   const childrenLeft:number[] = []  
   const [currentSub, setCurrentSub] = useState(1) //1~n
+  const [runNumber, setRunNumber] = useState(1) //1~n
 
   for(let i = 0; i < childrenNumber; i++){    
     let leftOffset = ((childrenNumber - 1)*100)/2 - (100*i)      
@@ -79,6 +82,7 @@ function Carousel(props: IProps) {
     // alert('right')    
     console.log(e.target.id)
     // setRunCtrl('running')
+    setRunNumber(runNumber+1)
   }
 
   function onProgressAnimState(progressState:ProgressState){
@@ -95,7 +99,14 @@ function Carousel(props: IProps) {
     </StyledDivWin>
     <StyledDivLeftArrow onClick={onArrowLeftClicked}  id='leftArrow'>{`<`}</StyledDivLeftArrow>
     <StyledDivRightArrow onClick={onArrowRightClicked} id='rightArrow'>{`>`}</StyledDivRightArrow>
-    <Progress childrenNum={childrenNumber} currentSub={currentSub} callback={onProgressAnimState} progressCtrl={false}></Progress>
+    <Progress 
+      childrenNum={childrenNumber} 
+      currentSub={currentSub} 
+      callback={onProgressAnimState} 
+      progressCtrl={ProgressCtrl.RUN}
+      runNumber={runNumber}
+    >
+    </Progress>
   </StyledDivCarousel>
 }
 

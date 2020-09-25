@@ -27,30 +27,54 @@ const progress0to100 = keyframes`
     width: 100%;
   }
 `
-const StyledDivProgressValue = styled.div<{ run: string }>`
+const progress0to100_2 = keyframes`
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+`
+const StyledDivProgressValue = styled.div<{ animName:any, animPlayState: string }>`
     width: 0%;
     height: 100%;
     background-color: green;
-    animation: ${progress0to100} 2s 1;
+    animation-name: ${props => props.animName};
+    animation-duration: 2s;
+    animation-iteration-count: 1;
     animation-fill-mode: forwards;
-    animation-play-state: ${props => props.run};
+    animation-play-state: ${props => props.animPlayState};
 `
 
 interface IProgress {
+  children?:any,
   childrenNum: number,
   currentSub: number,
-  progressCtrl: boolean,
-  callback: (progressState:number)=>any //number should change to enum
+  progressCtrl: Ctrl,  
+  callback: (progressState:number)=>any, //number should change to enum
+  runNumber: number //refresh progress bar only
 }
 export default function Progress(props: IProgress) {
-  const [runCtrl, setRunCtrl] = useState('running')
+
+  console.log(`in Progress(): ${props.runNumber%2}`)
 
   const childrenProgress: any[] = []
 
-  for (let i = 0; i < props.childrenNum; i++) {
+  const progressCtrl2AnimPlayState = (a:Ctrl)=>{
+    if(a == Ctrl.RUN){
+      return 'running'
+    }else{
+      return 'paused'
+    }
+  }
+
+  // for (let i = 0; i < props.childrenNum; i++) {
+  for (let i = 0; i < 1; i++) {
+    console.log(`in Progress(): childrenProgress.push(), props.runNumber:${props.runNumber}`)
     childrenProgress.push(<StyledDivProgressMax key={i}>
       <StyledDivProgressValue
-        run={runCtrl}
+        animName={props.runNumber%2==0?progress0to100:null}
+        animPlayState={progressCtrl2AnimPlayState(props.progressCtrl)}
         onAnimationStart={onProgressAnimationStart}
         onAnimationEnd={onProgressAnimationEnd}
         id={`pv${i}`}>
@@ -58,12 +82,13 @@ export default function Progress(props: IProgress) {
     </StyledDivProgressMax>)
   }
 
+
   function onProgressAnimationStart(e: any) {
     console.log(`onProgressAnimationStart: ${e.target.id}`)
   }
   function onProgressAnimationEnd(e: any) {
     console.log(`onProgressAnimationEnd: ${e.target.id}`)
-    // setLeft(childrenLeft[1])
+    
     props.callback(State.END)
   }
 
@@ -78,4 +103,10 @@ export enum State{
   RUNNING,
   PAUSED,
   END
+}
+export enum Ctrl{
+  RESET,
+  RUN,
+  PAUSE,
+  JUMP_TO_END
 }
