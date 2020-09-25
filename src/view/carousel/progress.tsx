@@ -31,12 +31,12 @@ const progress0to100_2 = keyframes`
     width: 100%;
   }
 `
-const StyledDivProgressValue = styled.div<{ widthPreset:number, animName:any, animPlayState: string }>`
+const StyledDivProgressValue = styled.div<{ widthPreset: number, animName: any, animPlayState: string, slideTime:string}>`
     width: ${props => props.widthPreset}%;
     height: 100%;
     background-color: white;
     animation-name: ${props => props.animName};
-    animation-duration: 3s;
+    animation-duration: ${props=>props.slideTime};
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     animation-timing-function: linear;
@@ -44,46 +44,48 @@ const StyledDivProgressValue = styled.div<{ widthPreset:number, animName:any, an
 `
 
 interface IProgress {
-  children?:any,
+  children?: any,
   childrenNum: number,
   currentSub: number,
-  progressCtrl: Ctrl,  
-  callback: (progressState:number)=>any, //number should change to enum
+  slideTime: string,
+  progressCtrl: Ctrl,
+  callback: (progressState: number) => any, //number should change to enum
   runNumber: number //refresh progress bar only
 }
 export default function Progress(props: IProgress) {
 
-  console.log(`in Progress(): ${props.runNumber%2}`)
+  // console.log(`in Progress(): ${props.runNumber%2}`)
+  console.log(`in Progress() slideTime: ${props.slideTime}`)
 
   const childrenProgress: any[] = []
 
-  const progressCtrl2AnimPlayState = (a:Ctrl)=>{
-    if(a == Ctrl.RUN){
+  const progressCtrl2AnimPlayState = (a: Ctrl) => {
+    if (a == Ctrl.RUN) {
       return 'running'
-    }else{
+    } else {
       return 'paused'
     }
   }
 
-  // for (let i = 0; i < 1; i++) {
   for (let i = 1; i <= props.childrenNum; i++) {
     // console.log(`in Progress(): childrenProgress.push(), props.runNumber:${props.runNumber}`)
     childrenProgress.push(<StyledDivProgressMax key={i}>
       <StyledDivProgressValue
-        widthPreset={i<=props.currentSub?100:0}
+        widthPreset={i <= props.currentSub ? 100 : 0}
         animName={
-          props.progressCtrl==Ctrl.RUN?
-          (
-            props.currentSub==i
-            ?(props.runNumber%2==0?progress0to100:progress0to100_2)
-            :null
-          )
-          :null
+          props.progressCtrl == Ctrl.RUN ?
+            (
+              props.currentSub == i
+                ? (props.runNumber % 2 == 0 ? progress0to100 : progress0to100_2)
+                : null
+            )
+            : null
         }
         // animName={props.runNumber%2==0?progress0to100:null}
         animPlayState={progressCtrl2AnimPlayState(props.progressCtrl)}
         onAnimationStart={onProgressAnimationStart}
         onAnimationEnd={onProgressAnimationEnd}
+        slideTime={props.slideTime}
         id={`pv${i}`}>
       </StyledDivProgressValue>
     </StyledDivProgressMax>)
@@ -91,11 +93,10 @@ export default function Progress(props: IProgress) {
 
 
   function onProgressAnimationStart(e: any) {
-    console.log(`onProgressAnimationStart: ${e.target.id}`)
+    // console.log(`onProgressAnimationStart: ${e.target.id}`)
   }
   function onProgressAnimationEnd(e: any) {
-    console.log(`onProgressAnimationEnd: ${e.target.id}`)
-    
+    // console.log(`onProgressAnimationEnd: ${e.target.id}`)    
     props.callback(State.END)
   }
 
@@ -105,13 +106,13 @@ export default function Progress(props: IProgress) {
 
 }
 
-export enum State{
+export enum State {
   READY,
   RUNNING,
   PAUSED,
   END
 }
-export enum Ctrl{
+export enum Ctrl {
   RESET,
   RUN,
   PAUSE,

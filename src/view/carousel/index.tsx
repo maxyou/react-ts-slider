@@ -5,7 +5,7 @@ import IconStopPlay from './icon/suspended.svg'
 import IconArrowLeft from './icon/arrow-left-bold.svg'
 import IconArrowRight from './icon/arrow-right-bold.svg'
 import Sub from './sub'
-import Progress, {State as ProgressState, Ctrl as ProgressCtrl} from './progress'
+import Progress, { State as ProgressState, Ctrl as ProgressCtrl } from './progress'
 
 const StyledDivCarousel = styled.div`
     width: 100%;
@@ -13,9 +13,9 @@ const StyledDivCarousel = styled.div`
     position: relative;
     overflow: hidden;
 `
-const StyledDivWin = styled.div<{left: number}>`
+const StyledDivWin = styled.div<{ left: number }>`
     transition:left 0.5s; 
-    left:${(props)=>props.left}%;
+    left:${(props) => props.left}%;
     position:relative;    
     width: 100%;
     height: 100%;
@@ -58,93 +58,79 @@ const StyledImgAutoPlay = styled.img`
     justify-content: center;    
     align-items: stretch;
 `
-interface CarouselOption {
-  slideTime: number,
-  autoPlay: boolean
-}
 interface IProps {
   children: any,
-  option: CarouselOption
+  slideTime: string,
+  autoPlay: boolean
 }
 
 function Carousel(props: IProps) {
 
-  console.log('in Carousel()')
+  // console.log('in Carousel()')
 
-  const childrenSub = React.Children.toArray(props.children).map((v, index)=><Sub key={index} subMsg='subMsg'>{v}</Sub>)
-  
+  const childrenSub = React.Children.toArray(props.children).map((v, index) => <Sub key={index} subMsg='subMsg'>{v}</Sub>)
+
   const childrenNumber = childrenSub.length
 
-  const childrenLeft:number[] = []  
-  const [autoPlay, setAutoPlay] = useState(props.option.autoPlay)
+  const childrenLeft: number[] = []
+  const [autoPlay, setAutoPlay] = useState(props.autoPlay)
   const [currentSub, setCurrentSub] = useState(1) //1~n
   const [runNumber, setRunNumber] = useState(1) //1~n
 
-  for(let i = 0; i < childrenNumber; i++){    
-    let leftOffset = ((childrenNumber - 1)*100)/2 - (100*i)      
-    childrenLeft.push(leftOffset)  
+  for (let i = 0; i < childrenNumber; i++) {
+    let leftOffset = ((childrenNumber - 1) * 100) / 2 - (100 * i)
+    childrenLeft.push(leftOffset)
   }
   const [left, setLeft] = useState(childrenLeft[0])
-  console.log(childrenLeft)
+  // console.log(childrenLeft)
 
-
-  useEffect(
-    () => {
-    }, []
-  )
-
-  function onArrowLeftClicked(e:any){
-    // alert('left')
-    console.log(e.target.id)
-    if(currentSub>1){
-      console.log(`onArrowLeftClicked: currentSub>1 ${currentSub}, childrenLeft[currentSub-1]:${childrenLeft[currentSub-1]}`)
-      setLeft(childrenLeft[(currentSub-1)-1])
-      setCurrentSub(currentSub-1)
-      setRunNumber(runNumber+1)
+  function onArrowLeftClicked(e: any) {
+    // console.log(e.target.id)
+    if (currentSub > 1) {
+      // console.log(`onArrowLeftClicked: currentSub>1 ${currentSub}, childrenLeft[currentSub-1]:${childrenLeft[currentSub - 1]}`)
+      setLeft(childrenLeft[(currentSub - 1) - 1])
+      setCurrentSub(currentSub - 1)
+      setRunNumber(runNumber + 1)
     }
   }
-  function onArrowRightClicked(e:any){
-    // alert('right')    
-    console.log(e.target.id)
-    
-    if(currentSub<childrenNumber){
-      setLeft(childrenLeft[(currentSub+1)-1])
-      setCurrentSub(currentSub+1)
-      setRunNumber(runNumber+1)
+  function onArrowRightClicked(e: any) {
+    if (currentSub < childrenNumber) {
+      setLeft(childrenLeft[(currentSub + 1) - 1])
+      setCurrentSub(currentSub + 1)
+      setRunNumber(runNumber + 1)
     }
   }
 
-  function onProgressAnimState(progressState:ProgressState){
-
-    console.log(`onProgressAnimEnd: ${currentSub}`)
-    if(currentSub<childrenNumber){
-      console.log(`onProgressAnimState: currentSub>1 ${currentSub}, childrenLeft[currentSub-1]:${childrenLeft[currentSub-1]}`)
+  function onProgressAnimState(progressState: ProgressState) {
+    // console.log(`onProgressAnimEnd: ${currentSub}`)
+    if (currentSub < childrenNumber) {
+      // console.log(`onProgressAnimState: currentSub>1 ${currentSub}, childrenLeft[currentSub-1]:${childrenLeft[currentSub - 1]}`)
       setLeft(childrenLeft[currentSub])
-      setCurrentSub(currentSub+1)
-      setRunNumber(runNumber+1)
+      setCurrentSub(currentSub + 1)
+      setRunNumber(runNumber + 1)
     }
   }
 
-  function enableAutoPlay(){
+  function enableAutoPlay() {
     setAutoPlay(!autoPlay)
   }
   return <StyledDivCarousel>
     <StyledDivWin left={left}>
       {childrenSub}
     </StyledDivWin>
-    {/* <StyledDivLeftArrow onClick={onArrowLeftClicked}  id='leftArrow'>{`<`}</StyledDivLeftArrow> */}
-    <StyledImgLeftArrow src={IconArrowLeft} onClick={onArrowLeftClicked}  id='leftArrow' />
+    <StyledImgLeftArrow src={IconArrowLeft} onClick={onArrowLeftClicked} id='leftArrow' />
     <StyledImgRightArrow src={IconArrowRight} onClick={onArrowRightClicked} id='rightArrow' />
     <StyledDivProgress>
-      <Progress 
-        childrenNum={childrenNumber} 
-        currentSub={currentSub} 
-        callback={onProgressAnimState} 
-        progressCtrl={autoPlay?ProgressCtrl.RUN:ProgressCtrl.PAUSE}
+      <Progress
+        childrenNum={childrenNumber}
+        currentSub={currentSub}
+        callback={onProgressAnimState}
+        slideTime={props.slideTime}
+        progressCtrl={autoPlay ? ProgressCtrl.RUN : ProgressCtrl.PAUSE}
         runNumber={runNumber}
-        >
+      >
       </Progress>
-    <StyledImgAutoPlay src={autoPlay?IconStopPlay:IconAutoPlay} onClick={enableAutoPlay} />
+      <StyledImgAutoPlay src={autoPlay ? IconStopPlay : IconAutoPlay} onClick={enableAutoPlay} />
     </StyledDivProgress>
   </StyledDivCarousel>
 }

@@ -29,7 +29,7 @@ function App() {
     <StyledDivApp>
       <StyledDivByUser color='#d2c394'>
 
-        <Carousel option={{ slideTime: 1000, autoPlay: false }}>
+        <Carousel slideTime={'1500ms'} autoPlay={false} >
           <div><span>1. This is the first chapter in a step-by-step guide about main React concepts. You can find a list of all its chapters in the navigation sidebar. If you’re reading this from a mobile device, you can access the navigation by pressing the button in the bottom right corner of your screen.</span></div>
           <div><span>2. This guide occasionally uses some of the newer JavaScript syntax in the examples. If you haven’t worked with JavaScript in the last few years, these three points should get you most of the way.</span></div>
           <div><span>3. It is called JSX, and it is a syntax extension to JavaScript. We recommend using it with React to describe what the UI should look like. JSX may remind you of a template language, but it comes with the full power of JavaScript.</span></div>
