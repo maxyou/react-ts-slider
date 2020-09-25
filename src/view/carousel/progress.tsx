@@ -27,7 +27,6 @@ const progress0to100 = keyframes`
     width: 100%;
   }
 `
-
 const StyledDivProgressValue = styled.div<{ run: string }>`
     width: 0%;
     height: 100%;
@@ -37,11 +36,11 @@ const StyledDivProgressValue = styled.div<{ run: string }>`
     animation-play-state: ${props => props.run};
 `
 
-
 interface IProgress {
   childrenNum: number,
   currentSub: number,
-  callback: () => void
+  progressCtrl: boolean,
+  callback: (progressState:number)=>any //number should change to enum
 }
 export default function Progress(props: IProgress) {
   const [runCtrl, setRunCtrl] = useState('running')
@@ -49,10 +48,6 @@ export default function Progress(props: IProgress) {
   const childrenProgress: any[] = []
 
   for (let i = 0; i < props.childrenNum; i++) {
-    let leftOffset = ((props.childrenNum - 1) * 100) / 2 - (100 * i)
-    // console.log(`i=${i}, a=${leftOffset}`)
-
-
     childrenProgress.push(<StyledDivProgressMax key={i}>
       <StyledDivProgressValue
         run={runCtrl}
@@ -63,23 +58,24 @@ export default function Progress(props: IProgress) {
     </StyledDivProgressMax>)
   }
 
-
-
   function onProgressAnimationStart(e: any) {
-
     console.log(`onProgressAnimationStart: ${e.target.id}`)
-
   }
   function onProgressAnimationEnd(e: any) {
-
     console.log(`onProgressAnimationEnd: ${e.target.id}`)
     // setLeft(childrenLeft[1])
-    props.callback()
+    props.callback(State.END)
   }
 
   return <StyledDivProcess>
     {childrenProgress}
   </StyledDivProcess>
 
+}
 
+export enum State{
+  READY,
+  RUNNING,
+  PAUSED,
+  END
 }

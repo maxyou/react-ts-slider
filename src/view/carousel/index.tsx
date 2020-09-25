@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { keyframes } from 'styled-components'
 import Sub from './sub'
-import Progress from './progress'
+import Progress, {State as ProgressState} from './progress'
 
 const StyledDivCarousel = styled.div`
     width: 100%;
@@ -81,9 +81,12 @@ function Carousel(props: IProps) {
     // setRunCtrl('running')
   }
 
-  function onProgressAnimEnd(){
+  function onProgressAnimState(progressState:ProgressState){
+
     console.log('onProgressAnimEnd')
-    setLeft(childrenLeft[currentSub])
+    if(currentSub<childrenNumber){
+      setLeft(childrenLeft[currentSub])
+    }
   }
 
   return <StyledDivCarousel>
@@ -92,7 +95,7 @@ function Carousel(props: IProps) {
     </StyledDivWin>
     <StyledDivLeftArrow onClick={onArrowLeftClicked}  id='leftArrow'>{`<`}</StyledDivLeftArrow>
     <StyledDivRightArrow onClick={onArrowRightClicked} id='rightArrow'>{`>`}</StyledDivRightArrow>
-    <Progress childrenNum={childrenNumber} currentSub={currentSub} callback={onProgressAnimEnd}></Progress>
+    <Progress childrenNum={childrenNumber} currentSub={currentSub} callback={onProgressAnimState} progressCtrl={false}></Progress>
   </StyledDivCarousel>
 }
 
