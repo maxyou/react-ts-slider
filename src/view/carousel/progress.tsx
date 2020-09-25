@@ -40,7 +40,7 @@ const StyledDivProgressValue = styled.div<{ animName:any, animPlayState: string 
     height: 100%;
     background-color: green;
     animation-name: ${props => props.animName};
-    animation-duration: 2s;
+    animation-duration: 1s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     animation-play-state: ${props => props.animPlayState};

@@ -67,6 +67,7 @@ function Carousel(props: IProps) {
     childrenLeft.push(leftOffset)  
   }
   const [left, setLeft] = useState(childrenLeft[0])
+  console.log(childrenLeft)
 
 
   useEffect(
@@ -77,18 +78,28 @@ function Carousel(props: IProps) {
   function onArrowLeftClicked(e:any){
     // alert('left')
     console.log(e.target.id)
+    if(currentSub>1){
+      console.log(`onArrowLeftClicked: currentSub>1 ${currentSub}, childrenLeft[currentSub-1]:${childrenLeft[currentSub-1]}`)
+      setLeft(childrenLeft[currentSub-2])
+      setCurrentSub(currentSub-1)
+      setRunNumber(runNumber+1)
+    }
   }
   function onArrowRightClicked(e:any){
     // alert('right')    
     console.log(e.target.id)
-    // setRunCtrl('running')
-    setRunNumber(runNumber+1)
+    if(currentSub<childrenNumber){
+      setLeft(childrenLeft[currentSub+1])
+      setCurrentSub(currentSub+1)
+      setRunNumber(runNumber+1)
+    }
   }
 
   function onProgressAnimState(progressState:ProgressState){
 
     console.log(`onProgressAnimEnd: ${currentSub}`)
     if(currentSub<childrenNumber){
+      console.log(`onProgressAnimState: currentSub>1 ${currentSub}, childrenLeft[currentSub-1]:${childrenLeft[currentSub-1]}`)
       setLeft(childrenLeft[currentSub])
       setCurrentSub(currentSub+1)
       setRunNumber(runNumber+1)
