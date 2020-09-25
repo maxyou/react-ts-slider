@@ -4,10 +4,7 @@ import { keyframes } from 'styled-components'
 
 const StyledDivProcess = styled.div`
     width: 70%;
-    height: 10%;
-    position:absolute;
-    bottom:5%;
-    left:15%;
+    height: 100%;
     background-color: red;
     display: flex;
     justify-content: center;    
@@ -74,8 +71,16 @@ export default function Progress(props: IProgress) {
     // console.log(`in Progress(): childrenProgress.push(), props.runNumber:${props.runNumber}`)
     childrenProgress.push(<StyledDivProgressMax key={i}>
       <StyledDivProgressValue
-        widthPreset={i<props.currentSub?100:0}
-        animName={props.currentSub==i?(props.runNumber%2==0?progress0to100:progress0to100_2):null}
+        widthPreset={i<=props.currentSub?100:0}
+        animName={
+          props.progressCtrl==Ctrl.RUN?
+          (
+            props.currentSub==i
+            ?(props.runNumber%2==0?progress0to100:progress0to100_2)
+            :null
+          )
+          :null
+        }
         // animName={props.runNumber%2==0?progress0to100:null}
         animPlayState={progressCtrl2AnimPlayState(props.progressCtrl)}
         onAnimationStart={onProgressAnimationStart}

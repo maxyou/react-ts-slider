@@ -9,7 +9,7 @@ const StyledDivCarousel = styled.div`
     height: 100%;
     background-color: #c27496;
     position: relative;
-    //overflow: hidden;
+    overflow: hidden;
 `
 
 const StyledDivWin = styled.div<{left: number}>`
@@ -40,7 +40,24 @@ const StyledDivRightArrow = styled.div`
     right:0%;
     background-color: blue;
 `
-
+const StyledDivProgress = styled.div`
+    width: 100%;
+    height: 10%;
+    position:absolute;
+    bottom:5%;
+    background-color: gray;
+    display: flex;
+    justify-content: center;    
+    align-items: stretch;
+`
+const StyledDivAutoPlay = styled.div`
+    width: 20%;
+    height: 100%;
+    background-color: brown;
+    display: flex;
+    justify-content: center;    
+    align-items: stretch;
+`
 interface CarouselOption {
   slideTime: number,
   autoPlay: boolean
@@ -59,6 +76,7 @@ function Carousel(props: IProps) {
   const childrenNumber = childrenSub.length
 
   const childrenLeft:number[] = []  
+  const [autoPlay, setAutoPlay] = useState(props.option.autoPlay)
   const [currentSub, setCurrentSub] = useState(1) //1~n
   const [runNumber, setRunNumber] = useState(1) //1~n
 
@@ -88,6 +106,7 @@ function Carousel(props: IProps) {
   function onArrowRightClicked(e:any){
     // alert('right')    
     console.log(e.target.id)
+    
     if(currentSub<childrenNumber){
       setLeft(childrenLeft[(currentSub+1)-1])
       setCurrentSub(currentSub+1)
@@ -106,20 +125,26 @@ function Carousel(props: IProps) {
     }
   }
 
+  function enableAutoPlay(){
+    setAutoPlay(!autoPlay)
+  }
   return <StyledDivCarousel>
     <StyledDivWin left={left}>
       {childrenSub}
     </StyledDivWin>
     <StyledDivLeftArrow onClick={onArrowLeftClicked}  id='leftArrow'>{`<`}</StyledDivLeftArrow>
     <StyledDivRightArrow onClick={onArrowRightClicked} id='rightArrow'>{`>`}</StyledDivRightArrow>
-    <Progress 
-      childrenNum={childrenNumber} 
-      currentSub={currentSub} 
-      callback={onProgressAnimState} 
-      progressCtrl={ProgressCtrl.RUN}
-      runNumber={runNumber}
-    >
-    </Progress>
+    <StyledDivProgress>
+      <Progress 
+        childrenNum={childrenNumber} 
+        currentSub={currentSub} 
+        callback={onProgressAnimState} 
+        progressCtrl={autoPlay?ProgressCtrl.RUN:ProgressCtrl.PAUSE}
+        runNumber={runNumber}
+        >
+      </Progress>
+    <StyledDivAutoPlay onClick={enableAutoPlay}>{autoPlay?'dis auto':'en auto'}</StyledDivAutoPlay>
+    </StyledDivProgress>
   </StyledDivCarousel>
 }
 
