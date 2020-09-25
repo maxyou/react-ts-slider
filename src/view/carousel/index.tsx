@@ -80,7 +80,7 @@ function Carousel(props: IProps) {
     console.log(e.target.id)
     if(currentSub>1){
       console.log(`onArrowLeftClicked: currentSub>1 ${currentSub}, childrenLeft[currentSub-1]:${childrenLeft[currentSub-1]}`)
-      setLeft(childrenLeft[currentSub-2])
+      setLeft(childrenLeft[(currentSub-1)-1])
       setCurrentSub(currentSub-1)
       setRunNumber(runNumber+1)
     }
@@ -89,7 +89,7 @@ function Carousel(props: IProps) {
     // alert('right')    
     console.log(e.target.id)
     if(currentSub<childrenNumber){
-      setLeft(childrenLeft[currentSub+1])
+      setLeft(childrenLeft[(currentSub+1)-1])
       setCurrentSub(currentSub+1)
       setRunNumber(runNumber+1)
     }

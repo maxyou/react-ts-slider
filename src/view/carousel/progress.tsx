@@ -35,14 +35,15 @@ const progress0to100_2 = keyframes`
     width: 100%;
   }
 `
-const StyledDivProgressValue = styled.div<{ animName:any, animPlayState: string }>`
-    width: 0%;
+const StyledDivProgressValue = styled.div<{ widthPreset:number, animName:any, animPlayState: string }>`
+    width: ${props => props.widthPreset}%;
     height: 100%;
     background-color: green;
     animation-name: ${props => props.animName};
-    animation-duration: 1s;
+    animation-duration: 3s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
+    animation-timing-function: linear;
     animation-play-state: ${props => props.animPlayState};
 `
 
@@ -68,12 +69,13 @@ export default function Progress(props: IProgress) {
     }
   }
 
-  // for (let i = 0; i < props.childrenNum; i++) {
-  for (let i = 0; i < 1; i++) {
+  // for (let i = 0; i < 1; i++) {
+  for (let i = 1; i <= props.childrenNum; i++) {
     // console.log(`in Progress(): childrenProgress.push(), props.runNumber:${props.runNumber}`)
     childrenProgress.push(<StyledDivProgressMax key={i}>
       <StyledDivProgressValue
-        animName={props.runNumber%2==0?progress0to100:progress0to100_2}
+        widthPreset={i<props.currentSub?100:0}
+        animName={props.currentSub==i?(props.runNumber%2==0?progress0to100:progress0to100_2):null}
         // animName={props.runNumber%2==0?progress0to100:null}
         animPlayState={progressCtrl2AnimPlayState(props.progressCtrl)}
         onAnimationStart={onProgressAnimationStart}
