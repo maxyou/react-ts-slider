@@ -1,7 +1,17 @@
 # slider
 An interview assignment of frontend.
 
-using: react+typescript+stylecomponent
+tech stack: react+typescript+stylecomponent
+
+usage:
+
+    <Carousel slideTime={'1500ms'} autoPlay={false} >
+      <div>user page 1</div>
+      <div>user page 2</div>
+      <div>user page 3</div>
+      <div>user page 4</div>
+      <div>user page 5</div>
+    </Carousel>
 
 done:
 
